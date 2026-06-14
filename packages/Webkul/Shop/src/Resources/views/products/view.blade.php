@@ -298,7 +298,7 @@
                                 {!! view_render_event('bagisto.shop.products.name.before', ['product' => $product]) !!}
 
                                 <div class="flex justify-between gap-4">
-                                    <h1 class="text-3xl font-medium break-words max-sm:text-xl" v-pre>
+                                    <h1 class="break-words font-dmserif text-4xl max-sm:text-2xl" v-pre>
                                         {{ $product->name }}
                                     </h1>
 
@@ -393,7 +393,7 @@
                                         <x-shop::quantity-changer
                                             name="quantity"
                                             value="1"
-                                            class="gap-x-4 rounded-xl px-7 py-4 max-md:py-3 max-sm:gap-x-5 max-sm:rounded-lg max-sm:px-4 max-sm:py-1.5"
+                                            class="gap-x-4 rounded-sm px-7 py-4 max-md:py-3 max-sm:gap-x-5 max-sm:px-4 max-sm:py-1.5"
                                         />
                                     @endif
 
@@ -405,7 +405,7 @@
 
                                         <x-shop::button
                                             type="submit"
-                                            class="secondary-button w-full max-w-full max-md:py-3 max-sm:rounded-lg max-sm:py-1.5"
+                                            class="secondary-button w-full max-w-full max-md:py-3 max-sm:py-1.5"
                                             button-type="secondary-button"
                                             :loading="false"
                                             :title="trans('shop::app.products.view.add-to-cart')"
@@ -426,7 +426,7 @@
                                     @if (core()->getConfigData('catalog.products.storefront.buy_now_button_display'))
                                         <x-shop::button
                                             type="submit"
-                                            class="primary-button mt-5 w-full max-w-[470px] max-md:py-3 max-sm:mt-3 max-sm:rounded-lg max-sm:py-1.5"
+                                            class="primary-button mt-5 w-full max-w-[470px] max-md:py-3 max-sm:mt-3 max-sm:py-1.5"
                                             button-type="primary-button"
                                             :title="trans('shop::app.products.view.buy-now')"
                                             :disabled="! $product->isSaleable(1)"
@@ -744,7 +744,7 @@
   "sku": "{{ $product->sku }}",
   "brand": {
     "@type": "Brand",
-    "name": "Craftmart"
+    "name": "Weavers Fab Studio"
   },
   "offers": {
     "@type": "Offer",

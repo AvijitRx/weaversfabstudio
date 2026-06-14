@@ -40,6 +40,19 @@
 
     {!! view_render_event('bagisto.shop.categories.view.banner_path.after') !!}
 
+    <!-- Category Heading -->
+    <div class="container mt-9 px-[60px] text-center max-lg:px-8 max-md:mt-5 max-md:px-4">
+        <p class="text-xs font-semibold uppercase tracking-[0.26em] text-madder">
+            Collection
+        </p>
+
+        <h1 class="mt-2 font-dmserif text-4xl max-md:text-3xl">
+            {{ $category->name }}
+        </h1>
+
+        <span class="mx-auto mt-4 block h-px w-12 bg-gold"></span>
+    </div>
+
     {!! view_render_event('bagisto.shop.categories.view.description.before') !!}
 
     @if (in_array($category->display_mode, [null, 'description_only', 'products_and_description']))
@@ -65,8 +78,8 @@
             type="text/x-template"
             id="v-category-template"
         >
-            <div class="container px-[60px] max-lg:px-8 max-md:px-4">
-                <div class="flex items-start gap-10 max-lg:gap-5 md:mt-10">
+            <div class="container px-8 max-md:px-4">
+                <div class="flex items-start gap-12 max-lg:gap-5 md:mt-10">
                     <!-- Product Listing Filters -->
                     @include('shop::categories.filters')
 
@@ -126,7 +139,7 @@
                         <div v-else class="mt-8 max-md:mt-5">
                             <!-- Product Card Shimmer Effect -->
                             <template v-if="isLoading">
-                                <div class="grid grid-cols-3 gap-8 max-1060:grid-cols-2 max-md:justify-items-center max-md:gap-x-4">
+                                <div class="grid grid-cols-5 gap-5 max-1180:grid-cols-3 max-1060:grid-cols-2 max-md:justify-items-center max-md:gap-x-4">
                                     <x-shop::shimmer.products.cards.grid count="12" />
                                 </div>
                             </template>
@@ -136,7 +149,7 @@
                             <!-- Product Card Listing -->
                             <template v-else>
                                 <template v-if="products.length">
-                                    <div class="grid grid-cols-3 gap-8 max-1060:grid-cols-2 max-md:justify-items-center max-md:gap-x-4">
+                                    <div class="grid grid-cols-5 gap-5 max-1180:grid-cols-3 max-1060:grid-cols-2 max-md:justify-items-center max-md:gap-x-4">
                                         <x-shop::products.card
                                             ::mode="'grid'"
                                             v-for="product in products"
@@ -172,7 +185,7 @@
 
                         <!-- Load More Button -->
                         <button
-                            class="secondary-button mx-auto mt-14 block w-max rounded-2xl px-11 py-3 text-center text-base max-md:rounded-lg max-sm:mt-6 max-sm:px-6 max-sm:py-1.5 max-sm:text-sm"
+                            class="secondary-button mx-auto mt-14 block w-max px-11 py-3 text-center max-sm:mt-6 max-sm:px-6 max-sm:py-1.5"
                             @click="loadMoreProducts"
                             v-if="links.next && ! loader"
                         >
@@ -181,7 +194,7 @@
 
                         <button
                             v-else-if="links.next"
-                            class="secondary-button mx-auto mt-14 block w-max rounded-2xl px-[74.5px] py-3.5 text-center text-base max-md:rounded-lg max-md:py-3 max-sm:mt-6 max-sm:px-[50.8px] max-sm:py-1.5"
+                            class="secondary-button mx-auto mt-14 block w-max px-[74.5px] py-3.5 text-center max-md:py-3 max-sm:mt-6 max-sm:px-[50.8px] max-sm:py-1.5"
                         >
                             <!-- Spinner -->
                             <img

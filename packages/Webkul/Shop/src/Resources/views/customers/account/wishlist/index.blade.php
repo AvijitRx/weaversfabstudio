@@ -48,7 +48,7 @@
                                 <span class="icon-arrow-left rtl:icon-arrow-right text-2xl"></span>
                             </a>
 
-                            <h2 class="text-2xl font-medium max-md:text-xl max-sm:text-base ltr:ml-2.5 md:ltr:ml-0 rtl:mr-2.5 md:rtl:mr-0">
+                            <h2 class="font-dmserif text-2xl max-md:text-xl max-sm:text-base ltr:ml-2.5 md:ltr:ml-0 rtl:mr-2.5 md:rtl:mr-0">
                                 @lang('shop::app.customers.account.wishlist.page-title')
                             </h2>
                         </div>
@@ -174,7 +174,7 @@
                                                         <template v-if="option?.attribute_type === 'file'">
                                                             <a
                                                                 :href="option.file_url"
-                                                                class="text-blue-700"
+                                                                class="text-madder"
                                                                 target="_blank"
                                                                 :download="option.file_name"
                                                             >
@@ -201,7 +201,7 @@
 
                                         <!--Wishlist Item removed button-->
                                         <a
-                                            class="flex cursor-pointer justify-end text-base text-blue-700 max-md:hidden"
+                                            class="flex cursor-pointer justify-end text-base text-madder max-md:hidden"
                                             @click="remove"
                                         >
                                             @lang('shop::app.customers.account.wishlist.remove')
@@ -244,7 +244,7 @@
                                 </p>
 
                                 <a
-                                    class="flex cursor-pointer justify-end text-base text-blue-700"
+                                    class="flex cursor-pointer justify-end text-base text-madder"
                                     @click="remove"
                                 >
                                     @lang('shop::app.customers.account.wishlist.remove')

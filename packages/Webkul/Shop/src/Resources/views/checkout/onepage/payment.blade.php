@@ -30,7 +30,7 @@
                     <x-slot:header class="px-0 py-4 max-md:p-3 max-md:text-sm max-md:font-medium max-sm:p-2">
                         
                         <div class="flex items-center justify-between">
-                            <h2 class="text-2xl font-medium max-md:text-base">
+                            <h2 class="font-dmserif text-2xl max-md:text-base">
                                 @lang('shop::app.checkout.onepage.payment.payment-method')
                             </h2>
                         </div>

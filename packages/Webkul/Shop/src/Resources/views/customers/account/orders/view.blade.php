@@ -29,7 +29,7 @@
                     <span class="icon-arrow-left rtl:icon-arrow-right text-2xl"></span>
                 </a>
 
-                <h2 class="text-2xl font-medium ltr:ml-2.5 rtl:mr-2.5 max-md:text-xl max-sm:text-base md:ltr:ml-0 md:rtl:mr-0">
+                <h2 class="font-dmserif text-2xl ltr:ml-2.5 rtl:mr-2.5 max-md:text-xl max-sm:text-base md:ltr:ml-0 md:rtl:mr-0">
                     @lang('shop::app.customers.account.orders.view.page-title', ['order_id' => $order->increment_id])
                 </h2>
             </div>
@@ -152,7 +152,7 @@
 
                                                                 <a
                                                                     href="{{ Storage::url($attribute['option_label']) }}"
-                                                                    class="text-blue-600 hover:underline"
+                                                                    class="text-madder hover:underline"
                                                                     download="{{ File::basename($attribute['option_label']) }}"
                                                                 >
                                                                     {{ File::basename($attribute['option_label']) }}

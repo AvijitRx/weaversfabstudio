@@ -8,7 +8,7 @@
     $showWishlist = (bool) core()->getConfigData('customer.settings.wishlist.wishlist_option');
 @endphp
 
-<div class="flex flex-wrap gap-4 px-4 pt-6 pb-4 shadow-sm lg:hidden">
+<div class="flex flex-wrap gap-4 border-b border-navyBlue/10 bg-cream px-4 pt-6 pb-4 lg:hidden">
     <div class="flex items-center justify-between w-full">
         <!-- Left Navigation -->
         <div class="flex items-center gap-x-1.5">
@@ -23,14 +23,13 @@
 
             <a
                 href="{{ route('shop.home.index') }}"
-                class="max-h-[30px]"
+                class="flex items-center"
                 aria-label="@lang('shop::app.components.layouts.header.mobile.bagisto')"
             >
                 <img
                     src="{{ core()->getCurrentChannel()->logo_url ?? bagisto_asset('images/logo.svg') }}"
                     alt="{{ config('app.name') }}"
-                    width="131"
-                    height="29"
+                    style="height:42px;width:auto"
                 >
             </a>
 
@@ -216,7 +215,7 @@
 
             <input
                 type="text"
-                class="block w-full rounded-xl border border-['#E3E3E3'] px-11 py-3.5 text-sm font-medium text-gray-900 max-md:rounded-lg max-md:px-10 max-md:py-3 max-md:font-normal max-sm:text-xs"
+                class="block w-full rounded-sm border border-navyBlue/15 bg-white px-11 py-3.5 text-sm font-medium text-navyBlue max-md:px-10 max-md:py-3 max-md:font-normal max-sm:text-xs"
                 name="query"
                 value="{{ request('query') }}"
                 placeholder="@lang('shop::app.components.layouts.header.mobile.search-text')"
@@ -249,8 +248,7 @@
                         <img
                             src="{{ core()->getCurrentChannel()->logo_url ?? bagisto_asset('images/logo.svg') }}"
                             alt="{{ config('app.name') }}"
-                            width="131"
-                            height="29"
+                            style="height:42px;width:auto"
                         >
                     </a>
                 </div>
@@ -258,40 +256,101 @@
 
             <x-slot:content class="!p-0">
                 <!-- Account Profile Hero Section -->
-                <div class="p-4 border-b border-zinc-200">
-                    <div class="grid grid-cols-[auto_1fr] items-center gap-4 rounded-xl border border-zinc-200 p-2.5">
+                <div class="border-b border-navyBlue/10 bg-cream p-4">
+                    <div class="grid grid-cols-[auto_1fr] items-center gap-4 rounded-sm border border-navyBlue/10 bg-white p-3">
                         <div>
                             <img
                                 src="{{ auth()->user()?->image_url ??  bagisto_asset('images/user-placeholder.png') }}"
-                                class="h-[60px] w-[60px] rounded-full max-md:rounded-full"
+                                class="h-[52px] w-[52px] rounded-full"
                             >
                         </div>
 
                         @guest('customer')
                             <a
                                 href="{{ route('shop.customer.session.create') }}"
-                                class="flex text-base font-medium"
+                                class="flex items-center text-base font-semibold"
                             >
                                 @lang('shop::app.components.layouts.header.mobile.login')
 
-                                <i class="icon-double-arrow text-2xl ltr:ml-2.5 rtl:mr-2.5"></i>
+                                <i class="icon-double-arrow text-2xl text-madder ltr:ml-2.5 rtl:mr-2.5"></i>
                             </a>
                         @endguest
 
                         @auth('customer')
                             <div
-                                class="flex flex-col justify-between gap-2.5 max-md:gap-0"
+                                class="flex flex-col justify-between gap-1"
                                 v-pre
                             >
-                                <p class="text-2xl break-all font-mediums max-md:text-xl">Hello! {{ auth()->user()?->first_name }}</p>
+                                <p class="break-all font-dmserif text-xl">Hello, {{ auth()->user()?->first_name }}</p>
 
-                                <p class="no-underline text-zinc-500 max-md:text-sm">{{ auth()->user()?->email }}</p>
+                                <p class="text-sm text-inkSoft no-underline">{{ auth()->user()?->email }}</p>
                             </div>
                         @endauth
                     </div>
                 </div>
 
+                <!-- Discover Links -->
+                <div class="border-b border-navyBlue/10 px-6 py-5">
+                    <p class="mb-3 text-[11px] font-bold uppercase tracking-[0.24em] text-madder">
+                        Discover
+                    </p>
+
+                    <div class="grid gap-3.5">
+                        <a href="{{ route('shop.search.index', ['new' => 1]) }}" class="text-base font-medium">
+                            New Arrivals
+                        </a>
+
+                        <a href="{{ route('shop.search.index') }}" class="text-base font-medium">
+                            All Products
+                        </a>
+
+                        <a href="{{ url('page/about-us') }}" class="text-base font-medium">
+                            About the Studio
+                        </a>
+
+                        <a href="{{ url('contact-us') }}" class="text-base font-medium">
+                            Contact Us
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Account Links -->
+                <div class="border-b border-navyBlue/10 px-6 py-5">
+                    <p class="mb-3 text-[11px] font-bold uppercase tracking-[0.24em] text-madder">
+                        My Account
+                    </p>
+
+                    <div class="grid gap-3.5">
+                        @if (core()->getConfigData('customer.settings.wishlist.wishlist_option'))
+                            <a href="{{ route('shop.customers.account.wishlist.index') }}" class="flex items-center gap-2.5 text-base font-medium">
+                                <span class="icon-heart text-xl"></span> @lang('shop::app.components.layouts.header.mobile.wishlist')
+                            </a>
+                        @endif
+
+                        <a href="{{ route('shop.customers.account.orders.index') }}" class="flex items-center gap-2.5 text-base font-medium">
+                            <span class="icon-orders text-xl"></span> @lang('shop::app.components.layouts.header.mobile.orders')
+                        </a>
+
+                        @if ($showCompare)
+                            <a href="{{ route('shop.compare.index') }}" class="flex items-center gap-2.5 text-base font-medium">
+                                <span class="icon-compare text-xl"></span> @lang('shop::app.components.layouts.header.mobile.compare')
+                            </a>
+                        @endif
+
+                        <a href="{{ route('shop.customers.account.profile.index') }}" class="flex items-center gap-2.5 text-base font-medium">
+                            <span class="icon-users text-xl"></span> @lang('shop::app.components.layouts.header.mobile.profile')
+                        </a>
+                    </div>
+                </div>
+
                 {!! view_render_event('bagisto.shop.components.layouts.header.mobile.drawer.categories.before') !!}
+
+                <!-- Categories Heading -->
+                <div class="px-6 pt-5">
+                    <p class="text-[11px] font-bold uppercase tracking-[0.24em] text-madder">
+                        Shop by Category
+                    </p>
+                </div>
 
                 <!-- Mobile category view -->
                 <v-mobile-category ref="mobileCategory"></v-mobile-category>

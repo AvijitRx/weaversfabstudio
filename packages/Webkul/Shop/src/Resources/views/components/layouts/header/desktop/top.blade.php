@@ -2,7 +2,7 @@
 
 <v-topbar>
     <!-- Shimmer Effect -->
-    <div class="flex items-center justify-between border border-b border-l-0 border-r-0 border-t-0 px-16">
+    <div class="flex items-center justify-between bg-navyBlue px-16">
         <!-- Currencies -->
         <div class="flex w-20 items-center justify-between gap-2.5 py-3">
             <div
@@ -55,7 +55,7 @@
         type="text/x-template"
         id="v-topbar-template"
     >
-        <div class="flex w-full items-center justify-between border border-b border-l-0 border-r-0 border-t-0 px-16">
+        <div class="flex w-full items-center justify-between bg-navyBlue px-16 text-sm text-white">
             {!! view_render_event('bagisto.shop.components.layouts.header.desktop.top.currency_switcher.before') !!}
 
             <!-- Currency Switcher -->
@@ -90,14 +90,14 @@
             {!! view_render_event('bagisto.shop.components.layouts.header.desktop.top.currency_switcher.after') !!}
 
             <p
-                class="py-3 text-xs font-medium"
+                class="py-3 text-xs font-medium uppercase tracking-[0.18em]"
                 v-pre
             >
                 {{ core()->getConfigData('general.content.header_offer.title') }}
-                
-                <a 
-                    href="{{ core()->getConfigData('general.content.header_offer.redirection_link') }}" 
-                    class="underline"
+
+                <a
+                    href="{{ core()->getConfigData('general.content.header_offer.redirection_link') }}"
+                    class="text-goldSoft underline"
                     role="button"
                 >
                     {{ core()->getConfigData('general.content.header_offer.redirection_title') }}

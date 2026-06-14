@@ -29,16 +29,34 @@ module.exports = {
 
         extend: {
             colors: {
-                navyBlue: "#060C3B",
-                lightOrange: "#F6F2EB",
+                /*
+                 * Weavers Fab Studio palette. `navyBlue` / `lightOrange` keep
+                 * their original names because every template references them —
+                 * remapping the values rebrands the whole theme at once.
+                 */
+                navyBlue: "#1D2435",    // ink
+                lightOrange: "#F4EEE2", // paper
                 darkGreen: '#40994A',
                 darkBlue: '#0044F2',
                 darkPink: '#F85156',
+                madder: "#B23A26",
+                madderDeep: "#8F2C1C",
+                gold: "#BB8A36",
+                goldSoft: "#F0C98A",
+                paper: "#F4EEE2",
+                cream: "#FAF6EE",
+                ivory: "#FCFAF5",
+                inkSoft: "#5A6072",
             },
 
             fontFamily: {
-                poppins: ["Poppins", "sans-serif"],
-                dmserif: ["DM Serif Display", "serif"],
+                /*
+                 * Same trick for type: templates reference `font-poppins` /
+                 * `font-dmserif` everywhere, so the brand fonts map onto
+                 * those names.
+                 */
+                poppins: ["Karla", "Helvetica Neue", "sans-serif"],
+                dmserif: ["Fraunces", "Georgia", "serif"],
             },
         }
     },
