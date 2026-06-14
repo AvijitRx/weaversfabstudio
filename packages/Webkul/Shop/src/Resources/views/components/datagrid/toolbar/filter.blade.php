@@ -37,7 +37,7 @@
                     <x-slot:toggle>
                         <div
                             class="flex w-full max-w-[200px] cursor-pointer items-center justify-between gap-4 rounded-lg border border-zinc-200 bg-white py-2 text-sm transition-all hover:border-gray-400 focus:border-gray-400 max-md:w-fit ltr:pl-3 ltr:pr-4 max-md:ltr:pl-2.5 max-md:ltr:pr-2.5 rtl:pl-4 rtl:pr-3 max-md:rtl:pl-2.5 max-md:rtl:pr-2.5"
-                            :class="{'[&>*]:text-blue-600': filters.columns.length > 0}"
+                            :class="{'[&>*]:text-madder': filters.columns.length > 0}"
                         >
                             <span class="flex items-center justify-between gap-1.5">
                                 <span class="icon-filter text-2xl"></span>
@@ -74,7 +74,7 @@
                                                 @click="removeAppliedColumnAllValues(column.index)"
                                             >
                                                 <p
-                                                    class="cursor-pointer text-xs font-medium leading-6 text-blue-600"
+                                                    class="cursor-pointer text-xs font-medium leading-6 text-madder"
                                                     v-if="hasAnyAppliedColumnValues(column.index)"
                                                 >
                                                     @lang('shop::app.components.datagrid.toolbar.filter.custom-filters.clear-all')
@@ -158,7 +158,7 @@
                                                 @click="removeAppliedColumnAllValues(column.index)"
                                             >
                                                 <p
-                                                    class="cursor-pointer text-xs font-medium leading-6 text-blue-600"
+                                                    class="cursor-pointer text-xs font-medium leading-6 text-madder"
                                                     v-if="hasAnyAppliedColumnValues(column.index)"
                                                 >
                                                     @lang('shop::app.components.datagrid.toolbar.filter.custom-filters.clear-all')
@@ -242,7 +242,7 @@
                                                 @click="removeAppliedColumnAllValues(column.index)"
                                             >
                                                 <p
-                                                    class="cursor-pointer text-xs font-medium leading-6 text-blue-600"
+                                                    class="cursor-pointer text-xs font-medium leading-6 text-madder"
                                                     v-if="hasAnyAppliedColumnValues(column.index)"
                                                 >
                                                     @lang('shop::app.components.datagrid.toolbar.filter.custom-filters.clear-all')
@@ -297,7 +297,7 @@
                                                 @click="removeAppliedColumnAllValues(column.index)"
                                             >
                                                 <p
-                                                    class="cursor-pointer text-xs font-medium leading-6 text-blue-600"
+                                                    class="cursor-pointer text-xs font-medium leading-6 text-madder"
                                                     v-if="hasAnyAppliedColumnValues(column.index)"
                                                 >
                                                     @lang('shop::app.components.datagrid.toolbar.filter.custom-filters.clear-all')
@@ -381,7 +381,7 @@
                                                 @click="removeAppliedColumnAllValues(column.index)"
                                             >
                                                 <p
-                                                    class="cursor-pointer text-xs font-medium leading-6 text-blue-600"
+                                                    class="cursor-pointer text-xs font-medium leading-6 text-madder"
                                                     v-if="hasAnyAppliedColumnValues(column.index)"
                                                 >
                                                     @lang('shop::app.components.datagrid.toolbar.filter.custom-filters.clear-all')
@@ -436,7 +436,7 @@
                                                 @click="removeAppliedColumnAllValues(column.index)"
                                             >
                                                 <p
-                                                    class="cursor-pointer text-xs font-medium leading-6 text-blue-600"
+                                                    class="cursor-pointer text-xs font-medium leading-6 text-madder"
                                                     v-if="hasAnyAppliedColumnValues(column.index)"
                                                 >
                                                     @lang('shop::app.components.datagrid.toolbar.filter.custom-filters.clear-all')
@@ -514,7 +514,7 @@
                                                 @click="removeAppliedColumnAllValues(column.index)"
                                             >
                                                 <p
-                                                    class="cursor-pointer text-xs font-medium leading-6 text-blue-600"
+                                                    class="cursor-pointer text-xs font-medium leading-6 text-madder"
                                                     v-if="hasAnyAppliedColumnValues(column.index)"
                                                 >
                                                     @lang('shop::app.components.datagrid.toolbar.filter.custom-filters.clear-all')

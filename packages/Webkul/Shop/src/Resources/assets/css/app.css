@@ -16,7 +16,16 @@ img.lazy {
 
 @layer components {
     ::selection {
-        background-color: rgba(6, 12, 59, .2);
+        background-color: rgba(178, 58, 38, .18);
+    }
+
+    body {
+        @apply bg-ivory text-navyBlue;
+    }
+
+    .font-dmserif {
+        font-weight: 500;
+        line-height: 1.15;
     }
 
     input {
@@ -432,11 +441,42 @@ img.lazy {
     }
 
     .primary-button {
-        @apply flex gap-x-1.5 items-center place-content-center font-medium rounded-xl text-white bg-navyBlue border border-navyBlue px-8 py-4 max-w-max cursor-pointer transition-all hover:opacity-[0.9];
+        @apply flex gap-x-1.5 items-center place-content-center font-semibold uppercase tracking-[0.12em] text-sm !rounded-sm text-white bg-madder border border-madder px-8 py-4 max-w-max cursor-pointer transition-all hover:bg-madderDeep hover:border-madderDeep;
     }
 
     .secondary-button {
-        @apply flex gap-x-1.5 items-center place-content-center font-medium rounded-xl bg-white text-navyBlue border border-navyBlue px-8 py-4 max-w-max cursor-pointer transition-all hover:bg-[#050e3a0d];
+        @apply flex gap-x-1.5 items-center place-content-center font-semibold uppercase tracking-[0.12em] text-sm !rounded-sm bg-transparent text-navyBlue border border-navyBlue px-8 py-4 max-w-max cursor-pointer transition-all hover:bg-navyBlue hover:text-white;
+    }
+
+    /* Header nav link with growing madder underline */
+    .wfs-nav-link {
+        @apply relative inline-block px-5 text-[13px] font-semibold uppercase tracking-[0.14em] transition-colors duration-300;
+    }
+
+    .wfs-nav-link::after {
+        content: "";
+        position: absolute;
+        left: 20px;
+        right: 20px;
+        bottom: -10px;
+        height: 2px;
+        background: #B23A26;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform .35s cubic-bezier(.16, 1, .3, 1);
+    }
+
+    [dir="rtl"] .wfs-nav-link::after {
+        transform-origin: right;
+    }
+
+    .group:hover > span > .wfs-nav-link,
+    .group:hover .wfs-nav-link {
+        @apply text-madder;
+    }
+
+    .group:hover .wfs-nav-link::after {
+        transform: scaleX(1);
     }
 
     .shimmer {

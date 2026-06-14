@@ -33,7 +33,7 @@
                             <!-- Modal Toggler -->
                             <x-slot:toggle>
                                 <span 
-                                    class="cursor-pointer text-base text-blue-700 max-sm:text-sm"
+                                    class="cursor-pointer text-base text-madder max-sm:text-sm"
                                     role="button"
                                     tabindex="0"
                                     v-if="! cart.coupon_code"
@@ -44,7 +44,7 @@
 
                             <!-- Modal Header -->
                             <x-slot:header class="max-md:p-5">
-                                <h2 class="text-2xl font-medium max-md:text-base">
+                                <h2 class="font-dmserif text-2xl max-md:text-base">
                                     @lang('shop::app.checkout.coupon.apply')
                                 </h2>
                             </x-slot>

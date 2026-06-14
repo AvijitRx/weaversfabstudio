@@ -116,15 +116,18 @@
 
         <!-- Filters Container -->
         <template v-else>
-            <div class="panel-side journal-scroll grid max-h-[1320px] min-w-[342px] grid-cols-[1fr] overflow-y-auto overflow-x-hidden max-xl:min-w-[270px] md:max-w-[342px] md:ltr:pr-7 md:rtl:pl-7">
+            <div
+                class="panel-side journal-scroll grid max-h-[1320px] min-w-[250px] grid-cols-[1fr] overflow-y-auto overflow-x-hidden max-xl:min-w-[230px] md:max-w-[250px]"
+                v-if="filters.available.length"
+            >
                 <!-- Filters Header Container -->
-                <div class="flex h-[50px] items-center justify-between border-b border-zinc-200 pb-2.5 max-md:hidden">
-                    <p class="text-lg font-semibold max-sm:font-medium">
+                <div class="flex h-[50px] items-center justify-between border-b border-navyBlue/15 pb-2.5 max-md:hidden">
+                    <p class="font-dmserif text-xl max-sm:font-medium">
                         @lang('shop::app.categories.filters.filters')
                     </p>
 
                     <p
-                        class="cursor-pointer text-xs font-medium"
+                        class="cursor-pointer text-xs font-semibold uppercase tracking-[0.12em] text-madder transition-colors hover:text-madderDeep"
                         tabindex="0"
                         @click="clear()"
                     >
@@ -176,35 +179,6 @@
 
                 <!-- Checkbox Filter Options -->
                 <template v-else>
-                    <!-- Search Box For Options -->
-                    <div
-                        class="flex flex-col gap-1"
-                        v-if="filter.type !== 'boolean'"
-                    >
-                        <div class="relative">
-                            <div class="icon-search pointer-events-none absolute top-3 flex items-center text-2xl max-md:text-xl max-sm:top-2.5 ltr:left-3 rtl:right-3"></div>
-
-                            <input
-                                type="text"
-                                class="block w-full rounded-xl border border-zinc-200 px-11 py-3.5 text-sm font-medium text-gray-900 max-md:rounded-lg max-md:px-10 max-md:py-3 max-md:font-normal max-sm:text-xs"
-                                placeholder="@lang('shop::app.categories.filters.search.title')"
-                                v-model="searchQuery"
-                                v-debounce:500="searchOptions"
-                            />
-                        </div>
-
-                        <p
-                            class="mt-1 flex flex-row-reverse text-xs text-gray-600"
-                            v-text="
-                                '@lang('shop::app.categories.filters.search.results-info', ['currentCount' => 'currentCount', 'totalCount' => 'totalCount'])'
-                                    .replace('currentCount', options.length)
-                                    .replace('totalCount', meta.total)
-                            "
-                            v-if="meta && meta.total > 0"
-                        >
-                        </p>
-                    </div>
-
                     <!-- Filter Options -->
                     <ul class="pb-3 text-base text-gray-700">
                         <template v-if="options.length">
@@ -345,7 +319,7 @@
                     isLoading: true,
 
                     filters: {
-                        available: {},
+                        available: [],
 
                         applied: {},
                     },

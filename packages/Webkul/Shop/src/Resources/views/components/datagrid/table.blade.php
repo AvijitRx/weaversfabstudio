@@ -17,7 +17,7 @@
         type="text/x-template"
         id="v-datagrid-table-template"
     >
-        <div class="w-full overflow-x-auto rounded-xl border max-md:rounded-none max-md:border-0">
+        <div class="w-full overflow-x-auto rounded-sm border border-navyBlue/10 max-md:rounded-none max-md:border-0">
             <div class="table-responsive box-shadow grid w-full overflow-hidden rounded bg-white">
                 <slot
                     name="header"
@@ -34,7 +34,7 @@
 
                     <template v-else>
                         <div
-                            class="row grid items-center gap-2.5 border-b border-zinc-200 bg-zinc-100 px-6 py-4 text-sm font-medium text-black max-md:p-4"
+                            class="row grid items-center gap-2.5 border-b border-navyBlue/10 bg-paper px-6 py-4 text-sm font-semibold uppercase tracking-[0.08em] text-navyBlue max-md:p-4"
                             :style="`grid-template-columns: repeat(${gridsCount}, minmax(0, 1fr))`"
                         >
                             <!-- Mass Actions -->

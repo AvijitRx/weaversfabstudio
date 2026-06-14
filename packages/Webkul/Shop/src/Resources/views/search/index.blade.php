@@ -28,7 +28,7 @@
         @endif
 
         <div class="mt-8 flex items-center justify-between max-md:mt-5">
-            <h2 class="break-all text-2xl font-medium max-sm:text-base">
+            <h2 class="break-all font-dmserif text-3xl max-sm:text-xl">
                 <span v-text="'{{ preg_replace('/[,\\"\\\']+/', '', $title) }}'" ></span>
             </h2>
         </div>
@@ -61,7 +61,7 @@
 
                     <button
                         type="submit"
-                        class="text-blue-600 hover:text-blue-800 hover:underline"
+                        class="text-madder hover:text-madderDeep hover:underline"
                         aria-label="{{ trans('shop::app.components.layouts.header.desktop.bottom.submit') }}"
                     >
                         {{ $searchInstead }}
@@ -81,8 +81,8 @@
             type="text/x-template"
             id="v-search-template"
         >
-            <div class="container px-[60px] max-lg:px-8 max-sm:px-4">
-                <div class="flex items-start gap-10 max-lg:gap-5 md:mt-10">
+            <div class="container px-8 max-sm:px-4">
+                <div class="flex items-start gap-12 max-lg:gap-5 md:mt-10">
                     <!-- Product Listing Filters -->
                     @include('shop::categories.filters')
 
@@ -138,7 +138,7 @@
                         <div v-else>
                             <!-- Product Card Shimmer Effect -->
                             <template v-if="isLoading">
-                                <div class="mt-8 grid grid-cols-3 gap-8 max-1060:grid-cols-2 max-md:gap-x-4 max-sm:mt-5 max-sm:justify-items-center max-sm:gap-y-5">
+                                <div class="mt-8 grid grid-cols-5 gap-5 max-1180:grid-cols-3 max-1060:grid-cols-2 max-md:gap-x-4 max-sm:mt-5 max-sm:justify-items-center max-sm:gap-y-5">
                                     <x-shop::shimmer.products.cards.grid count="12" />
                                 </div>
                             </template>
@@ -146,7 +146,7 @@
                             <!-- Product Card Listing -->
                             <template v-else>
                                 <template v-if="products.length">
-                                    <div class="mt-8 grid grid-cols-3 gap-8 max-1060:grid-cols-2 max-md:mt-5 max-md:justify-items-center max-md:gap-x-4 max-md:gap-y-5">
+                                    <div class="mt-8 grid grid-cols-5 gap-5 max-1180:grid-cols-3 max-1060:grid-cols-2 max-md:mt-5 max-md:justify-items-center max-md:gap-x-4 max-md:gap-y-5">
                                         <x-shop::products.card
                                             ::mode="'grid'"
                                             v-for="product in products"

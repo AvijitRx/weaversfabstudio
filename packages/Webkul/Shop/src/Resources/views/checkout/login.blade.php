@@ -1,7 +1,7 @@
 <!-- Checkout Login Vue JS Component -->
 <v-checkout-login>
     <div class="flex items-center">
-        <span class="cursor-pointer text-base font-medium text-blue-700">
+        <span class="cursor-pointer text-base font-medium text-madder">
             @lang('shop::app.checkout.login.title')
         </span>
     </div>
@@ -17,7 +17,7 @@
         <div>
             <div class="flex items-center">
                 <span
-                    class="cursor-pointer text-base font-medium text-blue-700"
+                    class="cursor-pointer text-base font-medium text-madder"
                     role="button"
                     @click="$refs.loginModel.open()"
                 >
@@ -40,7 +40,7 @@
                     <x-shop::modal ref="loginModel">
                         <!-- Modal Header -->
                         <x-slot:header>
-                            <h2 class="text-2xl font-medium max-md:text-base">
+                            <h2 class="font-dmserif text-2xl max-md:text-base">
                                 @lang('shop::app.checkout.login.title')
                             </h2>
                         </x-slot>

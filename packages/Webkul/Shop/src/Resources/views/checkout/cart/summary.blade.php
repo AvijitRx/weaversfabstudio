@@ -1,8 +1,8 @@
-<div class="w-[418px] max-w-full max-md:w-full">
+<div class="h-max w-[418px] max-w-full rounded-sm border border-navyBlue/10 bg-white p-7 shadow-[0_18px_40px_-24px_rgba(29,36,53,.22)] max-md:w-full max-md:p-5">
     {!! view_render_event('bagisto.shop.checkout.cart.summary.title.before') !!}
 
     <p
-        class="text-2xl font-medium max-md:text-base"
+        class="font-dmserif text-2xl max-md:text-base"
         role="heading"
         aria-level="1"
     >

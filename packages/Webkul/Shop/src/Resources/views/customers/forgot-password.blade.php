@@ -28,8 +28,7 @@
                 <img
                     src="{{ core()->getCurrentChannel()->logo_url ?? bagisto_asset('images/logo.svg') }}"
                     alt="{{ config('app.name') }}"
-                    width="131"
-                    height="29"
+                    style="height:64px;width:auto"
                 >
             </a>
         </div>
@@ -38,19 +37,19 @@
 
         <!-- Form Container -->
         <div
-            class="m-auto w-full max-w-[870px] rounded-xl border border-zinc-200 p-16 px-[90px] max-md:px-8 max-md:py-8 max-sm:border-none max-sm:p-0"
+            class="m-auto w-full max-w-[520px] rounded-sm border border-navyBlue/10 bg-white p-10 shadow-[0_18px_40px_-24px_rgba(29,36,53,.22)] max-md:px-8 max-md:py-8 max-sm:border-none max-sm:p-0"
         >
-            <h1 class="font-dmserif text-4xl max-md:text-3xl max-sm:text-xl">
+            <h1 class="font-dmserif text-3xl max-sm:text-xl">
                 @lang('shop::app.customers.forgot-password.title')
             </h1>
 
-            <p class="mt-4 text-xl text-zinc-500 max-sm:mt-0 max-sm:text-sm">
+            <p class="mt-3 text-base text-inkSoft max-sm:mt-0 max-sm:text-sm">
                 @lang('shop::app.customers.forgot-password.forgot-password-text')
             </p>
 
             {!! view_render_event('bagisto.shop.customers.forget_password.before') !!}
 
-            <div class="mt-14 rounded max-sm:mt-8">
+            <div class="mt-9 rounded max-sm:mt-8">
                 <x-shop::form :action="route('shop.customers.forgot_password.store')">
                     {!! view_render_event('bagisto.shop.customers.forget_password_form_controls.before') !!}
 
@@ -89,7 +88,7 @@
                     <!-- Submit Button -->
                     <div class="mt-8 flex flex-wrap items-center gap-9 max-sm:mt-0 max-sm:justify-center max-sm:text-center">
                         <button
-                            class="primary-button m-0 mx-auto block w-full max-w-[374px] rounded-2xl px-11 py-4 text-center text-base max-md:max-w-full max-md:rounded-lg max-md:py-3 max-sm:py-1.5 max-sm:text-sm ltr:ml-0 rtl:mr-0"
+                            class="primary-button m-0 mx-auto block w-full max-w-full rounded-2xl px-11 py-4 text-center text-base max-md:max-w-full max-md:rounded-lg max-md:py-3 max-sm:py-1.5 max-sm:text-sm ltr:ml-0 rtl:mr-0"
                             type="submit"
                         >
                             @lang('shop::app.customers.forgot-password.submit')
