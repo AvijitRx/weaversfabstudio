@@ -285,6 +285,18 @@
       .wfs-edit-head{flex-direction:column;align-items:flex-start}
       .wfs-arrow-link{margin-bottom:0}
       .wfs-hero-arrows{display:none}
+      /* drop the dark overlay over the hero image on mobile */
+      .wfs-slide .bg::after{display:none}
+      /* let the content layer fill the slide so the CTA can sit at its corner */
+      .wfs-slide{align-items:stretch}
+      .wfs-slide .wfs-wrap{display:flex}
+      .wfs-slide .inner{flex:1;display:flex;flex-direction:column;justify-content:center}
+      .wfs-slide .inner > .cta{transform:none}
+      /* shrink the primary "Shop" button and pin it to the slider's bottom-right */
+      .wfs-slide .cta .wfs-btn.solid{
+        position:absolute;z-index:6;right:0;bottom:20px;margin:0;
+        padding:9px 16px;font-size:.66rem;letter-spacing:.1em;gap:6px
+      }
     }
     @media (max-width:560px){
       .wfs-slide .cta{flex-direction:column;align-items:stretch}

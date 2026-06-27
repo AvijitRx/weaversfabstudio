@@ -19,6 +19,26 @@
         'theme_code' => $channel->theme,
         'channel_id' => $channel->id,
     ]);
+
+    /*
+     * Footer link URLs are entered by hand in the admin, and several were
+     * saved with a duplicated scheme (e.g. "https:https://example.com/page/..")
+     * which the browser treats as invalid, so the links won't open. Strip a
+     * leading scheme that is immediately followed by another scheme.
+     */
+    $footerLinkSections = collect($customization?->options ?? [])
+        ->map(function ($section) {
+            return collect($section)
+                ->map(function ($link) {
+                    $link['url'] = preg_replace('#^https?:(?=https?://)#i', '', $link['url'] ?? '');
+
+                    return $link;
+                })
+                ->values()
+                ->all();
+        })
+        ->values()
+        ->all();
 @endphp
 
 <footer class="mt-9 bg-navyBlue text-white max-sm:mt-10">
@@ -46,8 +66,8 @@
             class="flex flex-wrap items-start gap-24 max-1180:gap-10 max-1060:hidden"
             v-pre
         >
-            @if ($customization?->options)
-                @foreach ($customization->options as $footerLinkSection)
+            @if (! empty($footerLinkSections))
+                @foreach ($footerLinkSections as $footerLinkSection)
                     <ul class="grid gap-4 text-sm">
                         @php
                             usort($footerLinkSection, function ($a, $b) {
@@ -80,8 +100,8 @@
             </x-slot>
 
             <x-slot:content class="grid gap-4 !bg-transparent !p-0 !pb-5">
-                @if ($customization?->options)
-                    @foreach ($customization->options as $footerLinkSection)
+                @if (! empty($footerLinkSections))
+                    @foreach ($footerLinkSections as $footerLinkSection)
                         @php
                             usort($footerLinkSection, function ($a, $b) {
                                 return $a['sort_order'] - $b['sort_order'];
