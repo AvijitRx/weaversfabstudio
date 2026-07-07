@@ -196,7 +196,8 @@
 
                 data() {
                     return {
-                        isMobile: window.innerWidth <= 767,
+                        // below 1024px there isn't room for the sidebar + grid, so use the bottom filter drawer
+                        isMobile: window.innerWidth < 1024,
 
                         isLoading: true,
 
@@ -220,6 +221,12 @@
 
                         links: {},
                     }
+                },
+
+                mounted() {
+                    window.addEventListener('resize', () => {
+                        this.isMobile = window.innerWidth < 1024;
+                    });
                 },
 
                 computed: {

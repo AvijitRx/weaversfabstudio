@@ -48,7 +48,7 @@
     $defaultHeroSlides = [
         [
             'img'     => asset('storage/wfs/hero.jpg'),
-            'eyebrow' => 'Weavers Fab Studio · Est. 2014',
+            'eyebrow' => 'Weavers Fab Studio · Est. 2010',
             'title'   => 'Handwoven cloth,<br><em>tailored</em> for living.',
             'sub'     => 'Shirts, tees, kurtas and handloom fabric by the metre — naturally dyed and finished by hand.',
             'cta'     => ['label' => 'Shop the Collection', 'url' => route('shop.search.index')],
@@ -137,12 +137,14 @@
     .wfs-slide.active{opacity:1;visibility:visible;transition:opacity 1.1s ease;pointer-events:auto;z-index:2}
     .wfs-slide .bg{position:absolute;inset:0;background-size:cover;background-position:center 30%;transform:scale(1.12)}
     .wfs-slide.active .bg{transform:scale(1.02);transition:transform 7.5s cubic-bezier(.22,.61,.36,1)}
-    .wfs-slide .bg::after{content:"";position:absolute;inset:0;
-      background:linear-gradient(90deg,rgba(15,19,32,.84) 0%,rgba(15,19,32,.56) 42%,rgba(15,19,32,.16) 100%)}
+    /* no dark layer at all — text stays readable purely with a shadow */
     .wfs-slide .inner{position:relative;z-index:2;color:#fff;max-width:620px;padding:48px 0}
+    .wfs-slide .wfs-eyebrow.on-dark,
+    .wfs-slide h1,
+    .wfs-slide p.sub{text-shadow:0 1px 3px rgba(5,8,15,.65),0 3px 16px rgba(5,8,15,.85),0 8px 44px rgba(5,8,15,.6)}
     .wfs-slide h1{color:#fff;font-size:clamp(2.6rem,5.6vw,4.8rem);letter-spacing:-.01em;margin:18px 0 0}
     .wfs-slide h1 em{font-style:italic;color:var(--gold-soft);font-weight:400}
-    .wfs-slide p.sub{margin-top:20px;font-size:1.1rem;max-width:44ch;color:rgba(255,255,255,.85)}
+    .wfs-slide p.sub{margin-top:20px;font-size:1.1rem;max-width:44ch;color:rgba(255,255,255,.9)}
     .wfs-slide .cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
     .wfs-slide .inner > *{opacity:0;transform:translateY(22px);
       transition:opacity .7s ease,transform .7s cubic-bezier(.16,1,.3,1)}
@@ -160,6 +162,14 @@
     .wfs-hero-arrow{width:46px;height:46px;border-radius:999px;border:1px solid rgba(255,255,255,.45);background:transparent;
       color:#fff;font-size:1.05rem;cursor:pointer;transition:.3s;display:inline-flex;align-items:center;justify-content:center}
     .wfs-hero-arrow:hover{background:#fff;color:var(--ink);border-color:#fff}
+    /* shorter, tighter hero on phones */
+    /* shorter, tighter hero on phones (buttons keep their original layout, defined below) */
+    @media (max-width:640px){
+      .wfs-hero{height:clamp(390px,56vh,470px)}
+      .wfs-slide .inner{padding:22px 0}
+      .wfs-slide h1{font-size:clamp(2rem,7.6vw,2.7rem);margin-top:10px}
+      .wfs-slide p.sub{margin-top:12px;font-size:.98rem;line-height:1.45}
+    }
     @media (prefers-reduced-motion:reduce){
       .wfs-slide,.wfs-slide.active{transition:none}
       .wfs-slide .bg,.wfs-slide.active .bg{transform:none;transition:none}
@@ -201,7 +211,7 @@
     /* ---------- CAROUSEL RESKIN (Bagisto component inside .wfs) ---------- */
     .wfs-carousel{position:relative}
     .wfs-carousel .container{margin:0 !important;padding:0 !important;max-width:none !important}
-    .wfs-carousel .secondary-button{display:none} /* safety: bottom "View All" if a link is ever passed */
+    .wfs-carousel a.secondary-button{display:none} /* hide only the carousel's "View All" link, NOT the card's mobile add-to-cart button */
     /* the component's header row only holds the arrows now — collapse it */
     .wfs-carousel > div > .flex.justify-between{margin:0;min-height:0}
     /* arrows float over the rail edges, vertically centred */
@@ -318,6 +328,20 @@
 
     <div class="wfs">
 
+        {{-- ===================== VALUES MARQUEE (above slider) ===================== --}}
+        <div class="wfs-ribbon" aria-hidden="true">
+            <div class="track">
+                @for ($r = 0; $r < 2; $r++)
+                    <span>100% Secure Payment<i>✦</i></span>
+                    <span>Hanspun <i>✦</i></span>
+                    <span>Handwoven<i>✦</i></span>
+                    <span>Easy 5-day returns <i>✦</i></span>
+                    <span>Free shipping over ₹2,499 <i>✦</i></span>
+                    <span>All over world delivery <i>✦</i></span>
+                @endfor
+            </div>
+        </div>
+
         {{-- ===================== HERO SLIDER ===================== --}}
         <section
             class="wfs-hero"
@@ -374,20 +398,6 @@
             </div>
             @endif
         </section>
-
-        {{-- ===================== VALUES MARQUEE ===================== --}}
-        <div class="wfs-ribbon" aria-hidden="true">
-            <div class="track">
-                @for ($r = 0; $r < 2; $r++)
-                    <span>Handloom-woven <i>✦</i></span>
-                    <span>Natural dyes — indigo · madder · turmeric <i>✦</i></span>
-                    <span>Small batches <i>✦</i></span>
-                    <span>Easy 7-day returns <i>✦</i></span>
-                    <span>Free shipping over ₹1,499 <i>✦</i></span>
-                    <span>Fabric cut to order <i>✦</i></span>
-                @endfor
-            </div>
-        </div>
 
         {{-- ===================== SHOP BY CATEGORY ===================== --}}
         <section class="wfs-sec">

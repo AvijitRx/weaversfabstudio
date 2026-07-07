@@ -28,6 +28,17 @@
                 >
                 </span>
 
+                <!-- Mobile zoom in / out button (bottom-left, clear of the chat button) -->
+                <button
+                    type="button"
+                    class="fixed z-[1000] flex h-12 w-12 items-center justify-center rounded-full bg-navyBlue text-2xl text-white md:hidden"
+                    style="bottom:104px;left:16px;box-shadow:0 6px 20px rgba(0,0,0,.35)"
+                    :class="mScale > 1 ? 'icon-minus' : 'icon-search'"
+                    @click="toggleMobileZoom"
+                    aria-label="Zoom image"
+                >
+                </button>
+
                 <span
                     class="icon-arrow-left fixed left-2.5 top-1/2 z-10 -mt-12 w-auto cursor-pointer rounded-full bg-[rgba(0,0,0,0.8)] p-3 text-2xl font-bold text-white opacity-30 transition-all hover:opacity-100"
                     v-if="attachments.length >= 2"
@@ -88,17 +99,20 @@
                                     @mousewheel="handleMouseWheel"
                                 />
 
-                                <!-- For Mobile -->
+                                <!-- For Mobile (tap or pinch to zoom, drag to pan) -->
                                 <img
                                     :src="attachment.url"
-                                    class="max-h-full max-w-full transition-transform duration-300 ease-out md:hidden"
-                                    :class="{
-                                        'cursor-zoom-in': ! isZooming,
-                                        'cursor-grab': ! isDragging && isZooming,
-                                        'cursor-grabbing': isDragging && isZooming,
+                                    class="max-h-full max-w-full md:hidden"
+                                    :style="{
+                                        transform: `translate(${mTranslateX}px, ${mTranslateY}px) scale(${mScale})`,
+                                        transition: (mIsPinching || mIsPanning) ? 'none' : 'transform .25s ease-out',
+                                        touchAction: 'none'
                                     }"
-                                    :style="{transform: `translate(${translateX}px, ${translateY}px)`}"
-                                />    
+                                    @click="onMobileClick"
+                                    @touchstart="onMobileTouchStart"
+                                    @touchmove="onMobileTouchMove"
+                                    @touchend="onMobileTouchEnd"
+                                />
                             </template>
                         </div>
                     </div>
@@ -191,6 +205,29 @@
                     isMouseMoveTriggered: false,
 
                     isMouseDownTriggered: false,
+
+                    // --- mobile pinch / double-tap zoom + pan ---
+                    mScale: 1,
+
+                    mTranslateX: 0,
+
+                    mTranslateY: 0,
+
+                    mStartDist: 0,
+
+                    mStartScale: 1,
+
+                    mLastTouchX: 0,
+
+                    mLastTouchY: 0,
+
+                    mIsPinching: false,
+
+                    mIsPanning: false,
+
+                    mLastTapTime: 0,
+
+                    mMoved: false,
                 };
             },
 
@@ -326,6 +363,133 @@
                     this.translateX = 0;
 
                     this.translateY = 0;
+
+                    // reset mobile zoom too
+                    this.mScale = 1;
+
+                    this.mTranslateX = 0;
+
+                    this.mTranslateY = 0;
+
+                    this.mIsPinching = false;
+
+                    this.mIsPanning = false;
+                },
+
+                /* ---------- Mobile touch zoom ---------- */
+                mobileDistance(touches) {
+                    const dx = touches[0].clientX - touches[1].clientX;
+
+                    const dy = touches[0].clientY - touches[1].clientY;
+
+                    return Math.hypot(dx, dy);
+                },
+
+                onMobileTouchStart(event) {
+                    this.mMoved = false;
+
+                    // two fingers → start pinch
+                    if (event.touches.length === 2) {
+                        this.mIsPinching = true;
+
+                        this.mIsPanning = false;
+
+                        this.mStartDist = this.mobileDistance(event.touches);
+
+                        this.mStartScale = this.mScale;
+
+                        return;
+                    }
+
+                    // one-finger pan only when already zoomed
+                    if (event.touches.length === 1 && this.mScale > 1) {
+                        this.mIsPanning = true;
+
+                        this.mLastTouchX = event.touches[0].clientX;
+
+                        this.mLastTouchY = event.touches[0].clientY;
+                    }
+                },
+
+                onMobileTouchMove(event) {
+                    this.mMoved = true;
+
+                    if (this.mIsPinching && event.touches.length === 2) {
+                        const dist = this.mobileDistance(event.touches);
+
+                        const scale = this.mStartScale * (dist / this.mStartDist);
+
+                        this.mScale = Math.max(1, Math.min(scale, 4));
+
+                        if (this.mScale === 1) {
+                            this.mTranslateX = 0;
+
+                            this.mTranslateY = 0;
+                        }
+                    } else if (this.mIsPanning && event.touches.length === 1 && this.mScale > 1) {
+                        this.mTranslateX += event.touches[0].clientX - this.mLastTouchX;
+
+                        this.mTranslateY += event.touches[0].clientY - this.mLastTouchY;
+
+                        this.mLastTouchX = event.touches[0].clientX;
+
+                        this.mLastTouchY = event.touches[0].clientY;
+
+                        this.clampMobilePan(event.target);
+                    }
+                },
+
+                onMobileTouchEnd(event) {
+                    if (event.touches.length < 2) {
+                        this.mIsPinching = false;
+                    }
+
+                    if (event.touches.length === 0) {
+                        this.mIsPanning = false;
+                    }
+
+                    if (this.mScale <= 1) {
+                        this.mScale = 1;
+
+                        this.mTranslateX = 0;
+
+                        this.mTranslateY = 0;
+                    }
+                },
+
+                toggleMobileZoom() {
+                    if (this.mScale > 1) {
+                        this.mScale = 1;
+
+                        this.mTranslateX = 0;
+
+                        this.mTranslateY = 0;
+                    } else {
+                        this.mScale = 2.5;
+                    }
+                },
+
+                onMobileClick() {
+                    // ignore the click that follows a pinch / drag gesture
+                    if (this.mMoved) {
+                        this.mMoved = false;
+
+                        return;
+                    }
+
+                    this.toggleMobileZoom();
+                },
+
+                clampMobilePan(img) {
+                    if (! img) return;
+
+                    const maxX = (img.clientWidth * (this.mScale - 1)) / 2;
+
+                    const maxY = (img.clientHeight * (this.mScale - 1)) / 2;
+
+                    this.mTranslateX = Math.max(-maxX, Math.min(this.mTranslateX, maxX));
+
+                    this.mTranslateY = Math.max(-maxY, Math.min(this.mTranslateY, maxY));
                 },
             },
         });

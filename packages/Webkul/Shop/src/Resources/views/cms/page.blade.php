@@ -16,6 +16,15 @@
 
     <!-- Page Content -->
     <div class="cms-page">
+        <!-- Branded page header (consistent with the rest of the site) -->
+        <header class="cms-head">
+            <p class="cms-eyebrow">Weavers Fab Studio</p>
+
+            <h1 class="cms-page-title">{{ $page->page_title }}</h1>
+
+            <span class="cms-rule"></span>
+        </header>
+
         <article class="cms-prose">
             {!! $page->html_content !!}
         </article>
@@ -28,10 +37,47 @@
         display, Karla for body, ink/gold/paper palette). All styling is kept
         self-contained so the page renders correctly without an asset rebuild.
     --}}
+    @push('styles')
+    @verbatim
     <style>
         .cms-page {
             background: #FCFAF5;
-            padding: 4rem 1.5rem;
+            padding: clamp(2.75rem, 6vw, 4.5rem) 1.5rem;
+        }
+
+        /* Branded header — matches the eyebrow + serif title + gold rule used site-wide */
+        .cms-head {
+            max-width: 820px;
+            margin: 0 auto clamp(2rem, 4vw, 3rem);
+            text-align: center;
+        }
+
+        .cms-eyebrow {
+            font-family: 'Karla', 'Helvetica Neue', sans-serif;
+            font-size: 0.74rem;
+            font-weight: 700;
+            letter-spacing: 0.26em;
+            text-transform: uppercase;
+            color: #B23A26;
+        }
+
+        .cms-page-title {
+            margin: 0.6rem 0 0;
+            color: #1D2435;
+            font-family: 'Fraunces', 'Georgia', serif;
+            font-size: clamp(2.1rem, 4.4vw, 3rem);
+            font-weight: 600;
+            line-height: 1.08;
+            letter-spacing: -0.01em;
+        }
+
+        .cms-rule {
+            display: block;
+            width: 3rem;
+            height: 2px;
+            margin: 1.1rem auto 0;
+            border-radius: 2px;
+            background: #BB8A36;
         }
 
         .cms-prose {
@@ -47,27 +93,15 @@
             margin-top: 0;
         }
 
+        /* content H1 (if any) is a sub-headline now — the page header owns the title */
         .cms-prose h1 {
-            position: relative;
-            margin: 0 0 2rem;
-            padding-bottom: 1rem;
+            margin: 0 0 1.5rem;
             color: #1D2435;
             font-family: 'Fraunces', 'Georgia', serif;
-            font-size: 2.5rem;
+            font-size: 1.9rem;
             font-weight: 600;
             line-height: 1.15;
             letter-spacing: -0.01em;
-        }
-
-        .cms-prose h1::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 3.5rem;
-            height: 3px;
-            border-radius: 2px;
-            background: #BB8A36;
         }
 
         .cms-prose h2 {
@@ -163,4 +197,6 @@
             }
         }
     </style>
+    @endverbatim
+    @endpush
 </x-shop::layouts>
