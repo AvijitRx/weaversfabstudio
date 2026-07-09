@@ -153,9 +153,9 @@
         type="text/x-template"
         id="v-currency-switcher-template"
     >
-        <div class="my-2.5 grid min-w-[150px] gap-1 overflow-auto max-md:my-0 sm:max-h-[500px]">
+        <div class="grid min-w-[160px] gap-0.5 overflow-auto p-1.5 sm:max-h-[500px]">
             <span
-                class="cursor-pointer whitespace-nowrap px-5 py-2 text-base text-navyBlue hover:bg-gray-100"
+                class="cursor-pointer whitespace-nowrap rounded-lg px-4 py-2 text-base text-navyBlue transition-colors hover:bg-gray-100"
                 v-for="currency in currencies"
                 :class="{'bg-gray-100 font-semibold': currency.code == '{{ core()->getCurrentCurrencyCode() }}'}"
                 @click="change(currency)"
@@ -169,9 +169,9 @@
         type="text/x-template"
         id="v-locale-switcher-template"
     >
-        <div class="my-2.5 grid min-w-[150px] gap-1 overflow-auto max-md:my-0 sm:max-h-[500px]">
+        <div class="grid min-w-[160px] gap-0.5 overflow-auto p-1.5 sm:max-h-[500px]">
             <span
-                class="flex cursor-pointer items-center gap-2.5 whitespace-nowrap px-5 py-2 text-base text-navyBlue hover:bg-gray-100"
+                class="flex cursor-pointer items-center gap-2.5 whitespace-nowrap rounded-lg px-4 py-2 text-base text-navyBlue transition-colors hover:bg-gray-100"
                 :class="{'bg-gray-100 font-semibold': locale.code == '{{ app()->getLocale() }}'}"
                 v-for="locale in locales"
                 @click="change(locale)"                  
