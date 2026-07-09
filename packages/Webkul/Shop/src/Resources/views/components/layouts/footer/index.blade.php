@@ -82,7 +82,7 @@
                 </a>
 
                 <a
-                    href="https://www.youtube.com/weaversfabstudio"
+                    href="https://www.youtube.com/@weaversfabstudio"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="YouTube"
