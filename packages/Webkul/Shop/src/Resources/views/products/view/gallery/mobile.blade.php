@@ -26,6 +26,14 @@
         id="v-product-carousel-template"
     >
         <div class="relative m-auto flex w-full overflow-hidden">
+            @if (! $product->isSaleable())
+                <div class="absolute inset-0 z-[4] flex items-center justify-center bg-white/55">
+                    <span class="rounded-md bg-navyBlue/90 px-5 py-2.5 text-sm font-semibold uppercase tracking-[0.18em] text-white">
+                        Out of Stock
+                    </span>
+                </div>
+            @endif
+
             <!-- Slider -->
             <div
                 class="inline-flex translate-x-0 cursor-pointer transition-transform duration-700 ease-out will-change-transform"

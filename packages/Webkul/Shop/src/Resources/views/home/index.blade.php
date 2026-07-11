@@ -333,10 +333,10 @@
             <div class="track">
                 @for ($r = 0; $r < 2; $r++)
                     <span>100% Secure Payment<i>✦</i></span>
-                    <span>Hanspun <i>✦</i></span>
+                    <span>Handspun <i>✦</i></span>
                     <span>Handwoven<i>✦</i></span>
                     <span>Easy 5-day returns <i>✦</i></span>
-                    <span>Free shipping over ₹2,499 <i>✦</i></span>
+                    <span>Free shipping over ₹1,499 <i>✦</i></span>
                     <span>All over world delivery <i>✦</i></span>
                 @endfor
             </div>

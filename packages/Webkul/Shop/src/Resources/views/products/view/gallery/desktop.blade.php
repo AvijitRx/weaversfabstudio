@@ -66,9 +66,17 @@
     </div>
 
     <div
-        class="max-h-[610px] max-w-[560px]"
+        class="relative max-h-[610px] max-w-[560px]"
         v-show="! isMediaLoading"
     >
+        @if (! $product->isSaleable())
+            <div class="absolute inset-0 z-[4] flex items-center justify-center rounded-xl bg-white/55">
+                <span class="rounded-md bg-navyBlue/90 px-5 py-2.5 text-sm font-semibold uppercase tracking-[0.18em] text-white">
+                    Out of Stock
+                </span>
+            </div>
+        @endif
+
         <img
             class="min-w-[450px] cursor-pointer rounded-xl"
             :src="baseFile.path"

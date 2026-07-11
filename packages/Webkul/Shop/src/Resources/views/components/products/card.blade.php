@@ -56,6 +56,16 @@
                     @lang('shop::app.components.products.card.new')
                 </p>
 
+                <!-- Out of Stock Overlay -->
+                <div
+                    class="absolute inset-0 z-[3] flex items-center justify-center bg-white/55"
+                    v-if="! product.is_saleable"
+                >
+                    <span class="rounded-sm bg-navyBlue/90 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-white">
+                        Out of Stock
+                    </span>
+                </div>
+
                 <!-- Product Ratings -->
                 {!! view_render_event('bagisto.shop.components.products.card.average_ratings.before') !!}
 
@@ -203,6 +213,16 @@
                 >
                     @lang('shop::app.components.products.card.new')
                 </p>
+
+                <!-- Out of Stock Overlay -->
+                <div
+                    class="absolute inset-0 z-[3] flex items-center justify-center bg-white/55"
+                    v-if="! product.is_saleable"
+                >
+                    <span class="rounded-sm bg-navyBlue/90 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-white">
+                        Out of Stock
+                    </span>
+                </div>
 
                 {!! view_render_event('bagisto.shop.components.products.card.wishlist_option.before') !!}
 
