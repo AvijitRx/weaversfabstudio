@@ -1,7 +1,7 @@
 {{-- price-label kept (hidden) so the configurable JS that toggles it doesn't break --}}
 <p class="price-label" hidden></p>
 
-@if ($prices['final']['price'] < $prices['regular']['price'])
+@if (isset($prices['final']['price'], $prices['regular']['price']) && $prices['final']['price'] < $prices['regular']['price'])
     <p class="regular-price text-lg font-semibold text-gray-500 line-through">
         {{ $prices['regular']['formatted_price'] }}
     </p>
