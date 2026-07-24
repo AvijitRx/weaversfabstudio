@@ -1,18 +1,28 @@
 {{-- price-label kept (hidden) so the configurable JS that toggles it doesn't break --}}
 <p class="price-label" hidden></p>
 
-@if (isset($prices['final']['price'], $prices['regular']['price']) && $prices['final']['price'] < $prices['regular']['price'])
+@php
+    // A configurable with no (or broken) variants can come back without these
+    // keys — never let a missing key raise a fatal ErrorException here.
+    $regularPrice = $prices['regular'] ?? null;
+    $finalPrice   = $prices['final'] ?? null;
+
+    $isOnSale = isset($finalPrice['price'], $regularPrice['price'])
+        && $finalPrice['price'] < $regularPrice['price'];
+@endphp
+
+@if ($isOnSale)
     <p class="regular-price text-lg font-semibold text-gray-500 line-through">
-        {{ $prices['regular']['formatted_price'] }}
+        {{ $regularPrice['formatted_price'] ?? '' }}
     </p>
 
     <p class="final-price font-semibold">
-        {{ $prices['final']['formatted_price'] }}
+        {{ $finalPrice['formatted_price'] ?? '' }}
     </p>
 @else
     <p class="regular-price text-lg font-semibold text-gray-500 line-through"></p>
 
     <p class="final-price font-semibold">
-        {{ $prices['regular']['formatted_price'] }}
+        {{ $regularPrice['formatted_price'] ?? ($finalPrice['formatted_price'] ?? '') }}
     </p>
 @endif
