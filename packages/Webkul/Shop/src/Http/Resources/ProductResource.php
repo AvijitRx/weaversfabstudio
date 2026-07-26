@@ -46,6 +46,7 @@ class ProductResource extends JsonResource
                 ->where('channel_id', core()->getCurrentChannel()->id)
                 ->where('product_id', $this->id)->count(),
             'min_price' => core()->formatPrice($productTypeInstance->getMinimalPrice()),
+            'discount_percent' => $this->getDiscountPercent($productTypeInstance),
             'prices' => $productTypeInstance->getProductPrices(),
             'price_html' => $productTypeInstance->getPriceHtml(),
             'ratings' => [
@@ -56,5 +57,41 @@ class ProductResource extends JsonResource
                 'total' => $this->reviewHelper->getTotalReviews($this),
             ],
         ];
+    }
+
+    /**
+     * Discount percentage off the original price, or null when not discounted.
+     *
+     * Read off the price index rather than getProductPrices(), because a
+     * configurable only ever returns a 'regular' key (set to the minimum final
+     * price), so its discount is not derivable from that array. Never throws —
+     * a product card must not be able to break a listing page.
+     *
+     * @param  \Webkul\Product\Type\AbstractType  $productTypeInstance
+     * @return int|null
+     */
+    protected function getDiscountPercent($productTypeInstance)
+    {
+        try {
+            $priceIndex = $productTypeInstance->getPriceIndex();
+
+            if (! $priceIndex) {
+                return null;
+            }
+
+            $regular = (float) $priceIndex->regular_min_price;
+            $final = (float) $priceIndex->min_price;
+
+            if (
+                $regular <= 0
+                || $final >= $regular
+            ) {
+                return null;
+            }
+
+            return (int) round((($regular - $final) / $regular) * 100);
+        } catch (\Throwable $e) {
+            return null;
+        }
     }
 }

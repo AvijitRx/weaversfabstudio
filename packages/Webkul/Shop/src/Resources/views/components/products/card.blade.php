@@ -40,12 +40,18 @@
 
                 {!! view_render_event('bagisto.shop.components.products.card.image.after') !!}
 
-                <!-- Product Sale Badge -->
+                <!-- Product Sale Badge — shows the real discount when we can work it out -->
                 <p
                     class="absolute top-2.5 z-[2] inline-block rounded-sm bg-madder px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-white ltr:left-2.5 rtl:right-2.5"
                     v-if="product.on_sale"
                 >
-                    @lang('shop::app.components.products.card.sale')
+                    <template v-if="product.discount_percent">
+                        @{{ product.discount_percent }}% Off
+                    </template>
+
+                    <template v-else>
+                        @lang('shop::app.components.products.card.sale')
+                    </template>
                 </p>
 
                 <!-- Product New Badge -->
@@ -198,12 +204,18 @@
 
                 {!! view_render_event('bagisto.shop.components.products.card.image.after') !!}
 
-                <!-- Product Sale Badge -->
+                <!-- Product Sale Badge — shows the real discount when we can work it out -->
                 <p
                     class="absolute top-2.5 z-[2] inline-block rounded-sm bg-madder px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-white ltr:left-2.5 rtl:right-2.5"
                     v-if="product.on_sale"
                 >
-                    @lang('shop::app.components.products.card.sale')
+                    <template v-if="product.discount_percent">
+                        @{{ product.discount_percent }}% Off
+                    </template>
+
+                    <template v-else>
+                        @lang('shop::app.components.products.card.sale')
+                    </template>
                 </p>
 
                 <!-- Product New Badge -->
