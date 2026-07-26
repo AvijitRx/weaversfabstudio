@@ -14,6 +14,28 @@
         ->get();
 
     /*
+     * "Live Sale" section — driven by the category with the slug "sale".
+     * Both the category and a non-zero product count are required, so a store
+     * without a sale category simply renders the homepage without the section
+     * instead of erroring or showing an empty carousel.
+     */
+    $saleCategoryId = \Illuminate\Support\Facades\DB::table('category_translations')
+        ->where('slug', 'sale')
+        ->value('category_id');
+
+    $saleCategory = $saleCategoryId
+        ? Category::where('id', $saleCategoryId)->where('status', 1)->first()
+        : null;
+
+    $saleProductCount = $saleCategory
+        ? \Illuminate\Support\Facades\DB::table('product_categories')
+            ->join('products', 'products.id', '=', 'product_categories.product_id')
+            ->where('product_categories.category_id', $saleCategory->id)
+            ->whereNull('products.parent_id')
+            ->count()
+        : 0;
+
+    /*
      * Hero slides come from the admin "Image Carousel" theme customization
      * (Settings → Themes) when it is enabled and has images; otherwise the
      * branded defaults below are used.
@@ -226,6 +248,55 @@
     .wfs-carousel .icon-arrow-left-stylish:hover,
     .wfs-carousel .icon-arrow-right-stylish:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
 
+    /* ---------- LIVE SALE (dark madder band) ---------- */
+    /* deliberately unlike the light New Arrivals / Studio Edit rows: the sale
+       reads as its own full-bleed band, white cards on deep madder */
+    .wfs-sec.wfs-live-sale{background:var(--madder-deep);color:#fff;
+      background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.03) 0 2px,transparent 2px 10px)}
+    .wfs-live-sale .wfs-edit-head{border-bottom-color:rgba(255,255,255,.24);align-items:flex-end}
+    .wfs-live-sale .wfs-eyebrow{color:var(--gold-soft)}
+    .wfs-live-sale h2{color:#fff}
+    .wfs-live-sale h2 em{font-style:italic;font-weight:400;color:var(--gold-soft)}
+    .wfs-live-sale .rule{display:block;width:62px;height:2px;background:var(--gold);margin:16px 0 0}
+    .wfs-live-sale .note{color:rgba(255,255,255,.78)}
+    .wfs-live-sale .wfs-arrow-link{color:#fff}
+    .wfs-live-sale .wfs-arrow-link .ar{color:var(--gold-soft)}
+    .wfs-live-sale .wfs-arrow-link::after{background:var(--gold-soft)}
+
+    /* the Bagisto cards inherit dark text — lift name, price and arrows onto the band */
+    .wfs-live-sale .wfs-carousel p{color:#fff}
+    .wfs-live-sale .wfs-carousel .final-price{color:#fff}
+    .wfs-live-sale .wfs-carousel .regular-price{color:rgba(255,255,255,.58)}
+    .wfs-live-sale .wfs-carousel .icon-arrow-left-stylish,
+    .wfs-live-sale .wfs-carousel .icon-arrow-right-stylish{
+      background:transparent;border-color:rgba(255,255,255,.5);color:#fff;box-shadow:none}
+    .wfs-live-sale .wfs-carousel .icon-arrow-left-stylish:hover,
+    .wfs-live-sale .wfs-carousel .icon-arrow-right-stylish:hover{
+      background:#fff;color:var(--madder-deep);border-color:#fff}
+    /* the card's mobile add-to-cart button is dark-on-dark here (the `a.secondary-button`
+       carousel "View All" stays hidden by the rule above) */
+    .wfs-live-sale .wfs-carousel button.secondary-button{
+      border-color:rgba(255,255,255,.55);color:#fff;background:transparent}
+    .wfs-live-sale .wfs-carousel button.secondary-button:hover:not(:disabled){
+      background:#fff;color:var(--madder-deep);border-color:#fff}
+    .wfs-live-sale .wfs-carousel button.secondary-button:disabled{
+      border-color:rgba(255,255,255,.28);color:rgba(255,255,255,.5)}
+
+    /* this is a sale row, so the cards must read as shoppable rather than as a
+       lookbook — the buy bar stays down instead of waiting for a hover */
+    @media (min-width:768px){
+      .wfs-live-sale .wfs-carousel button.bottom-0{transform:translateY(0);background:var(--ink)}
+      .wfs-live-sale .wfs-carousel button.bottom-0:hover:not(:disabled){background:var(--madder)}
+      .wfs-live-sale .wfs-carousel button.bottom-0:disabled{background:rgba(29,36,53,.65)}
+    }
+    /* bigger, louder discount chip in this band only */
+    .wfs-live-sale .wfs-carousel .bg-madder{
+      background:var(--gold);color:var(--ink);font-weight:700;letter-spacing:.12em}
+
+    @media (max-width:640px){
+      .wfs-live-sale .rule{margin-top:12px}
+    }
+
     /* ---------- CATEGORY TILES ---------- */
     .wfs-cats{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(14px,1.6vw,22px)}
     .wfs-cat{position:relative;display:block;aspect-ratio:3/4;overflow:hidden;border-radius:3px;background:#e4d9c4}
@@ -398,6 +469,35 @@
             </div>
             @endif
         </section>
+
+        {{-- ===================== LIVE SALE (real products) ===================== --}}
+        @if ($saleCategory && $saleProductCount)
+        <section class="wfs-sec wfs-live-sale">
+            <div class="wfs-wrap">
+                <div class="wfs-edit-head wfs-rise">
+                    <div>
+                        <span class="wfs-eyebrow">On Sale Now</span>
+                        <h2>Live <em>Sale</em></h2>
+                        <span class="rule"></span>
+                        <p class="note">Reduced while stocks last — handwoven pieces at studio prices.</p>
+                    </div>
+
+                    <a href="{{ route('shop.product_or_category.index', $saleCategory->slug) }}" class="wfs-arrow-link">
+                        View all offers <span class="ar">→</span>
+                    </a>
+                </div>
+
+                <div class="wfs-carousel">
+                    {{-- navigation-link intentionally empty: the section head above carries the "View all" link --}}
+                    <x-shop::products.carousel
+                        :title="''"
+                        :src="route('shop.api.products.index', ['category_id' => $saleCategory->id, 'limit' => 12, 'sort' => 'name-asc'])"
+                        :navigation-link="''"
+                    />
+                </div>
+            </div>
+        </section>
+        @endif
 
         {{-- ===================== SHOP BY CATEGORY ===================== --}}
         <section class="wfs-sec">
